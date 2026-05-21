@@ -234,7 +234,7 @@
             }
 
             // Grow the Yes button
-            yesScale += 0.2; 
+            yesScale += 0.1; 
             btnYes.style.transform = `scale(${yesScale})`;
 
             // Show sad puppy at the 4th click ("I am crying! 😭")
@@ -247,22 +247,21 @@
             // Move the "No" button to a random spot on the screen
             btnNo.style.position = 'fixed'; 
 
-            // IPHONE SPECIFIC BOUNDARY MATH:
-            // We use larger margins for top (notch) and bottom (home bar)
-            const safeMarginSides = 30; 
-            const safeMarginTop = 80;    // iPhone notch area
-            const safeMarginBottom = 100; // iPhone home indicator area
-
+            // FOOLPROOF IPHONE BOUNDARY MATH:
             const btnWidth = btnNo.offsetWidth;
             const btnHeight = btnNo.offsetHeight;
             
-            // Calculate maximum available space based on safe margins
-            const maxX = window.innerWidth - btnWidth - safeMarginSides;
-            const maxY = window.innerHeight - btnHeight - safeMarginBottom;
+            // 1. Set the absolute minimum edges (Top and Left)
+            const minX = 20;  // Stays at least 20px away from the left edge
+            const minY = 100; // Stays at least 100px away from the top notch/URL bar
 
-            // Pick a random spot inside the strict safe zone
-            const randomX = Math.floor(Math.random() * (maxX - safeMarginSides + 1)) + safeMarginSides;
-            const randomY = Math.floor(Math.random() * (maxY - safeMarginTop + 1)) + safeMarginTop;
+            // 2. Set the absolute maximum edges (Bottom and Right)
+            const maxX = window.innerWidth - btnWidth - 20;   // 20px from right edge
+            const maxY = window.innerHeight - btnHeight - 120; // 120px from bottom swipe bar
+
+            // 3. Pick a random spot strictly between the Min and Max
+            const randomX = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+            const randomY = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
 
             btnNo.style.left = randomX + 'px';
             btnNo.style.top = randomY + 'px';
