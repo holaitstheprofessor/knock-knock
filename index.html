@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Viewport fit=cover is important for iPhone notch support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>I Miss You! 🌸</title>
+    <style>
+        /* Base Reset and No-Scroll Setup */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+            /* Prevents accidental text highlighting while tapping on mobile */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            /* 100dvh is the magic fix for iOS Safari address bars */
+            height: 100dvh; 
+            width: 100vw;
+            overflow: hidden; /* Prevents any scrolling */
+            touch-action: none; /* Stops pull-to-refresh and swiping */
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Flowery Background Decor */
+        .flower {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+            z-index: -1;
+        }
+        .f1 { top: 10%; left: 10%; animation-delay: 0s; }
+        .f2 { top: 20%; right: 15%; animation-delay: 1s; }
+        .f3 { bottom: 15%; left: 20%; animation-delay: 2s; }
+        .f4 { bottom: 25%; right: 10%; animation-delay: 3s; }
+        .f5 { top: 40%; left: 5%; animation-delay: 4s; }
+        .f6 { top: 50%; right: 5%; animation-delay: 1.5s; font-size: 3rem;}
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(20deg); }
+        }
+
+        /* Screen Containers */
+        #screen1, #screen2 {
+            width: 90%;
+            max-width: 450px;
+            /* Slightly smaller padding to fit iPhone 14 perfectly */
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        #screen2 {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Typography */
+        h1 {
+            color: #ff477e;
+            font-size: 2rem;
+            margin-bottom: 12px;
+            text-shadow: 2px 2px 4px rgba(255, 192, 203, 0.8);
+        }
+
+        p {
+            color: #4a4a4a;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        h2 {
+            color: #ff477e;
+            margin: 15px 0 10px 0;
+            font-size: 1.4rem;
+        }
+
+        .dynamic-message {
+            color: #ff1493;
+            font-weight: bold;
+            min-height: 25px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        /* Images */
+        img {
+            max-width: 100%;
+            border-radius: 15px;
+            margin-bottom: 10px;
+        }
+
+        #sad-pup-container {
+            display: none; /* Hidden at first */
+            margin-bottom: 15px;
+        }
+
+        #sad-pup-container img {
+            width: 120px; /* Shrunk slightly for mobile screens */
+            margin: 0 auto;
+        }
+
+        #sad-pup-container p {
+            color: #ff477e;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* Buttons */
+        .button-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+            min-height: 70px;
+        }
+
+        button {
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        #btn-yes {
+            background-color: #ff477e;
+            color: white;
+            z-index: 5;
+            transform: scale(1);
+        }
+
+        #btn-no {
+            background-color: #f8f9fa;
+            color: #333;
+            z-index: 100;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Floating Background Flowers -->
+    <div class="flower f1">🌸</div>
+    <div class="flower f2">🌺</div>
+    <div class="flower f3">🌷</div>
+    <div class="flower f4">🌼</div>
+    <div class="flower f5">🌻</div>
+    <div class="flower f6">🌸</div>
+
+    <!-- MAIN SCREEN -->
+    <div id="screen1">
+        <h1>I MISS YOUUU 💖</h1>
+        <p>Every song reminds me of you.</p>
+        <p>Every cute thing reminds me of you.</p>
+        <p>Even my phone probably got tired of me checking your messages every 2 minutes 🥺</p>
+        <p>So I made this tiny website because missing you normally was not enough.</p>
+        
+        <h2>Do you miss me too?</h2>
+        
+        <div class="dynamic-message" id="message-box"></div>
+
+        <div id="sad-pup-container">
+            <img src="https://media.giphy.com/media/L95W4wv8nnb9K/giphy.gif" alt="Sad Puppy">
+            <p>Please click YES... look at this face! 🥺</p>
+        </div>
+
+        <div class="button-container">
+            <button id="btn-yes">Yes</button>
+            <button id="btn-no">No</button>
+        </div>
+    </div>
+
+    <!-- FINAL SCREEN -->
+    <div id="screen2">
+        <!-- Replaced with a direct raw GIF link so it actually loads -->
+        <img src="https://tenor.com/en-GB/view/indian-dance-happy-troll-couple-couple-dance-gif-25805619.gif" alt="Happy Dance">
+        <h2>Ae Haaloo!</h2>
+    </div>
+
+    <script>
+        const btnNo = document.getElementById('btn-no');
+        const btnYes = document.getElementById('btn-yes');
+        const messageBox = document.getElementById('message-box');
+        const sadPupContainer = document.getElementById('sad-pup-container');
+        const screen1 = document.getElementById('screen1');
+        const screen2 = document.getElementById('screen2');
+
+        // Messages that appear when she clicks "No"
+        const noMessages = [
+            "Really? 🤨",
+            "Are you absolutely sure? 💔",
+            "One last thought... 🧐",
+            "I am crying! 😭",
+            "I'm not letting you click no. 😤",
+            "Just click Yes",
+            "Just click Yess!",
+            "<b>JUST CLICK YESSS!</b>" // Added bold tags here!
+        ];
+
+        let noClickCount = 0;
+        let yesScale = 1;
+
+        btnNo.addEventListener('click', function(e) {
+            e.preventDefault(); 
+            
+            // Update the text message (Using innerHTML so the bold tags work)
+            if (noClickCount < noMessages.length) {
+                messageBox.innerHTML = noMessages[noClickCount];
+            } else {
+                messageBox.innerHTML = noMessages[noMessages.length - 1];
+            }
+
+            // Grow the Yes button
+            yesScale += 0.05; 
+            btnYes.style.transform = `scale(${yesScale})`;
+
+            // Show sad puppy at the 4th click ("I am crying! 😭")
+            if (noClickCount >= 3) {
+                sadPupContainer.style.display = 'block';
+            }
+
+            noClickCount++;
+
+            // Move the "No" button to a random spot on the screen
+            btnNo.style.position = 'fixed'; 
+
+            // IPHONE SPECIFIC BOUNDARY MATH:
+            // We use larger margins for top (notch) and bottom (home bar)
+            const safeMarginSides = 30; 
+            const safeMarginTop = 80;    // iPhone notch area
+            const safeMarginBottom = 100; // iPhone home indicator area
+
+            const btnWidth = btnNo.offsetWidth;
+            const btnHeight = btnNo.offsetHeight;
+            
+            // Calculate maximum available space based on safe margins
+            const maxX = window.innerWidth - btnWidth - safeMarginSides;
+            const maxY = window.innerHeight - btnHeight - safeMarginBottom;
+
+            // Pick a random spot inside the strict safe zone
+            const randomX = Math.floor(Math.random() * (maxX - safeMarginSides + 1)) + safeMarginSides;
+            const randomY = Math.floor(Math.random() * (maxY - safeMarginTop + 1)) + safeMarginTop;
+
+            btnNo.style.left = randomX + 'px';
+            btnNo.style.top = randomY + 'px';
+        });
+
+        // What happens when she finally clicks "Yes"
+        btnYes.addEventListener('click', function() {
+            screen1.style.display = 'none';
+            screen2.style.display = 'flex';
+        });
+    </script>
+</body>
+</html>
+
